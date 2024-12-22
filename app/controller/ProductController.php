@@ -15,6 +15,19 @@ class ProductController extends View
         $this->view('products/index', ['products' => $products]);
     }
 
+    public function create()
+    {
+        $this->view('products/create');
+    }
+
+    public function store()
+    {
+        if ($_SERVER['REQUEST_METHOD'] !== 'POST') die('404 not found');
+
+        $productModel = new Product;
+        $product = $productModel->paramQuery('INSERT INTO products(name, description, price) VALUES(:name, :description, :price)', $_POST);
+    }
+
     public function show($params)
     {
         $idProduct = $params[0];
@@ -28,7 +41,7 @@ class ProductController extends View
     {
         $idProduct = $params[0];
         $productModel = new Product;
-        $product = $productModel->deleteQuery('DELETE FROM products WHERE id = :id', [':id' => $idProduct]);
+        $product = $productModel->paramQuery('DELETE FROM products WHERE id = :id', [':id' => $idProduct]);
         
         $this->view('products/destroy');
     }
@@ -36,11 +49,8 @@ class ProductController extends View
     public function edit($params)
     {
         $idProduct = $params[0];
-        var_dump($idProduct);
         $productModel = new Product;
         $product = $productModel->findById('SELECT * FROM products WHERE id = :id', [':id' => $idProduct]);
-
-        $this->view('products/edit', ['product' => $product]);
     }
 
     public function update($params)
@@ -57,7 +67,7 @@ class ProductController extends View
                 ':id' => $idProduct,
             ];
             $productModel = new Product;
-            $product = $productModel->updateQuery('UPDATE products SET name = :name, description = :description, price = :price WHERE id = :id', $campos);
+            $product = $productModel->paramQuery('UPDATE products SET name = :name, description = :description, price = :price WHERE id = :id', $campos);
         endif;
         die('404 not found');
     }

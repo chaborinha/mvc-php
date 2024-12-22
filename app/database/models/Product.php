@@ -33,21 +33,7 @@ class Product
         }
     }
 
-    public function deleteQuery(string $sql, array $params = [])
-    {
-        try {
-            $connection = Connection::connect();
-
-            $stmt = $connection->prepare($sql);
-            $stmt->execute($params);
-
-            $stmt ? header('location: http://localhost/web/product') : 'erro';
-        } catch (\PDOException $err) {
-            echo 'Ocorreu algum erro: ' . $err->getMessage();
-        }
-    }
-
-    public function updateQuery(string $sql, array $params = [])
+    public function paramQuery(string $sql, array $params = [])
     {
         try {
             $connection = Connection::connect();

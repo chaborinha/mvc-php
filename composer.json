@@ -1,0 +1,17 @@
+{
+    "name": "kaua/web",
+    "authors": [
+        {
+            "name": "chaborinha",
+            "email": "chaboradev@gmail.com"
+        }
+    ],
+    "require": {
+        "symfony/var-dumper": "^7.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "app\\":"app"
+        }
+    }
+}
